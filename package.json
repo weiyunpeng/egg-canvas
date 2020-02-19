@@ -1,0 +1,65 @@
+{
+  "name": "egg-canvas",
+  "version": "1.0.1",
+  "description": "node版的canvas",
+  "types": "./index.d.ts",
+  "eggPlugin": {
+    "name": "canvas"
+  },
+  "keywords": [
+    "egg",
+    "eggPlugin",
+    "egg-plugin"
+  ],
+  "dependencies": {
+    "jpeg-js": "^0.3.7",
+    "opentype.js": "^1.1.0",
+    "pngjs": "^3.4.0"
+  },
+  "devDependencies": {
+    "autod": "^3.1.0",
+    "autod-egg": "^1.1.0",
+    "egg": "^2.23.0",
+    "egg-bin": "^4.13.0",
+    "egg-ci": "^1.13.0",
+    "egg-mock": "^3.25.1",
+    "eslint": "^6.2.1",
+    "eslint-config-egg": "^7.4.1",
+    "lodash": "^4.17.15"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "scripts": {
+    "test": "npm run lint -- --fix && egg-bin pkgfiles && npm run test-local",
+    "test-local": "egg-bin test",
+    "cov": "egg-bin cov",
+    "lint": "eslint .",
+    "ci": "egg-bin pkgfiles --check && npm run lint && npm run cov",
+    "pkgfiles": "egg-bin pkgfiles",
+    "autod": "autod"
+  },
+  "files": [
+    ".autod.conf.js",
+    "app",
+    "config",
+    "index.d.ts"
+  ],
+  "ci": {
+    "version": "8, 10"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eggjs/egg-canvas.git"
+  },
+  "bugs": {
+    "url": "https://github.com/eggjs/egg/issues"
+  },
+  "homepage": "https://github.com/eggjs/egg-canvas#readme",
+  "author": "VipRoc",
+  "license": "MIT",
+  "main": ".autod.conf.js",
+  "directories": {
+    "test": "test"
+  }
+}
