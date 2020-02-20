@@ -3,6 +3,9 @@ language: node_js
 node_js:
   - '8'
   - '10'
+env:
+    global:
+      - CODECOV_TOKEN: 6dd58a10-38bc-461a-8b39-942ef291cb38
 before_install:
   - npm i npminstall -g
 install:
