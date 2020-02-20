@@ -1,6 +1,6 @@
 {
   "name": "egg-canvas",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "node版的canvas",
   "types": "./index.d.ts",
   "eggPlugin": {
@@ -9,7 +9,9 @@
   "keywords": [
     "egg",
     "eggPlugin",
-    "egg-plugin"
+    "egg-plugin",
+    "egg-canvas",
+    "canvas"
   ],
   "dependencies": {
     "jpeg-js": "^0.3.7",
@@ -50,12 +52,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/eggjs/egg-canvas.git"
+    "url": "git+https://github.com/weiyunpeng/egg-canvas"
   },
   "bugs": {
-    "url": "https://github.com/eggjs/egg/issues"
+    "url": "https://github.com/weiyunpeng/egg-canvas/issues"
   },
-  "homepage": "https://github.com/eggjs/egg-canvas#readme",
+  "homepage": "https://github.com/weiyunpeng/egg-canvas#readme",
   "author": "VipRoc",
   "license": "MIT",
   "main": ".autod.conf.js",
