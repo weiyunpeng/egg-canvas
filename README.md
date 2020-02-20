@@ -9,16 +9,18 @@
 
 [npm-image]: https://img.shields.io/npm/v/egg-canvas.svg?style=flat-square
 [npm-url]: https://npmjs.org/package/egg-canvas
-[travis-image]: https://img.shields.io/travis/eggjs/egg-canvas.svg?style=flat-square
-[travis-url]: https://travis-ci.org/eggjs/egg-canvas
-[codecov-image]: https://img.shields.io/codecov/c/github/eggjs/egg-canvas.svg?style=flat-square
-[codecov-url]: https://codecov.io/github/eggjs/egg-canvas?branch=master
-[david-image]: https://img.shields.io/david/eggjs/egg-canvas.svg?style=flat-square
-[david-url]: https://david-dm.org/eggjs/egg-canvas
+[travis-image]: https://img.shields.io/travis/weiyunpeng/egg-canvas.svg?style=flat-square
+[travis-url]: https://travis-ci.org/weiyunpeng/egg-canvas
+[codecov-image]: https://img.shields.io/codecov/c/github/weiyunpeng/egg-canvas.svg?style=flat-square
+[codecov-url]: https://codecov.io/gh/weiyunpeng/egg-canvas?branch=master
+[david-image]: https://img.shields.io/david/weiyunpeng/egg-canvas.svg?style=flat-square
+[david-url]: https://david-dm.org/weiyunpeng/egg-canvas
 [snyk-image]: https://snyk.io/test/npm/egg-canvas/badge.svg?style=flat-square
 [snyk-url]: https://snyk.io/test/npm/egg-canvas
 [download-image]: https://img.shields.io/npm/dm/egg-canvas.svg?style=flat-square
 [download-url]: https://npmjs.org/package/egg-canvas
+
+[![codecov](https://codecov.io/gh/weiyunpeng/egg-canvas/branch/master/graph/badge.svg)](https://codecov.io/gh/weiyunpeng/egg-canvas)
 
 <!--
 Description here.
