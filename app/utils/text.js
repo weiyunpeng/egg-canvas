@@ -25,22 +25,15 @@ const _fonts = {};
  * @return {void}
  */
 exports.registerFont = (binaryPath, family, weight, style, variant) => {
-  return new Promise((resolve, reject) => {
-    opentype.load(binaryPath, (err, font) => {
-      if (err) {
-        reject(new Error('Could not load font: ' + err));
-      }
-      _fonts[family] = {
+    const font = opentype.loadSync(binaryPath);
+    return (_fonts[family] = {
         binary: binaryPath,
         family,
         weight,
         style,
         variant,
-        font,
-      };
-      resolve(_fonts[family]);
+        font
     });
-  });
 };
 /** @ignore */
 exports.debug_list_of_fonts = _fonts;
@@ -55,9 +48,9 @@ exports.debug_list_of_fonts = _fonts;
  * @return {object}  字体信息
  */
 function findFont(family) {
-  if (_fonts[family]) return _fonts[family];
-  family = Object.keys(_fonts)[0];
-  return _fonts[family];
+    if (_fonts[family]) return _fonts[family];
+    family = Object.keys(_fonts)[0];
+    return _fonts[family];
 }
 
 /**
@@ -72,34 +65,34 @@ function findFont(family) {
  * @return {void}
  */
 exports.processTextPath = function(ctx, text, x, y, fill) {
-  const font = findFont(ctx._font.family);
-  if (!font) {
-    console.warn('Font missing', ctx._font);
-  }
-  const size = ctx._font.size;
-  const path = font.font.getPath(text, x, y, size);
-  ctx.beginPath();
-  path.commands.forEach(function(cmd) {
-    switch (cmd.type) {
-      case 'M':
-        ctx.moveTo(cmd.x, cmd.y);
-        break;
-      case 'Q':
-        ctx.quadraticCurveTo(cmd.x1, cmd.y1, cmd.x, cmd.y);
-        break;
-      case 'L':
-        ctx.lineTo(cmd.x, cmd.y);
-        break;
-      case 'Z': {
-        ctx.closePath();
-        fill ? ctx.fill() : ctx.stroke();
-        ctx.beginPath();
-        break;
-      }
-      default:
-        ctx.moveTo(cmd.x, cmd.y);
+    const font = findFont(ctx._font.family);
+    if (!font) {
+        console.warn('Font missing', ctx._font);
     }
-  });
+    const size = ctx._font.size;
+    const path = font.font.getPath(text, x, y, size);
+    ctx.beginPath();
+    path.commands.forEach(function(cmd) {
+        switch (cmd.type) {
+            case 'M':
+                ctx.moveTo(cmd.x, cmd.y);
+                break;
+            case 'Q':
+                ctx.quadraticCurveTo(cmd.x1, cmd.y1, cmd.x, cmd.y);
+                break;
+            case 'L':
+                ctx.lineTo(cmd.x, cmd.y);
+                break;
+            case 'Z': {
+                ctx.closePath();
+                fill ? ctx.fill() : ctx.stroke();
+                ctx.beginPath();
+                break;
+            }
+            default:
+                ctx.moveTo(cmd.x, cmd.y);
+        }
+    });
 };
 
 /**
@@ -111,18 +104,18 @@ exports.processTextPath = function(ctx, text, x, y, fill) {
  * @return {object} text Info
  */
 exports.measureText = function(ctx, text) {
-  const font = findFont(ctx._font.family);
-  if (!font) console.warn("WARNING. Can't find font family ", ctx._font);
-  const fsize = ctx._font.size;
-  const glyphs = font.font.stringToGlyphs(text);
-  let advance = 0;
-  glyphs.forEach(function(g) {
-    advance += g.advanceWidth;
-  });
+    const font = findFont(ctx._font.family);
+    if (!font) console.warn("WARNING. Can't find font family ", ctx._font);
+    const fsize = ctx._font.size;
+    const glyphs = font.font.stringToGlyphs(text);
+    let advance = 0;
+    glyphs.forEach(function(g) {
+        advance += g.advanceWidth;
+    });
 
-  return {
-    width: (advance / font.font.unitsPerEm) * fsize,
-    emHeightAscent: (font.font.ascender / font.font.unitsPerEm) * fsize,
-    emHeightDescent: (font.font.descender / font.font.unitsPerEm) * fsize,
-  };
+    return {
+        width: (advance / font.font.unitsPerEm) * fsize,
+        emHeightAscent: (font.font.ascender / font.font.unitsPerEm) * fsize,
+        emHeightDescent: (font.font.descender / font.font.unitsPerEm) * fsize
+    };
 };

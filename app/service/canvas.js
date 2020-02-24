@@ -32,8 +32,8 @@ class CanvasService extends Service {
      *
      * @return {object} 字体信息
      */
-  async registerFont(binaryPath, family, weight, style, variant) {
-    return await text.registerFont(binaryPath, family, weight, style, variant);
+  registerFont(binaryPath, family, weight, style, variant) {
+    return text.registerFont(binaryPath, family, weight, style, variant);
   }
 
   /**
