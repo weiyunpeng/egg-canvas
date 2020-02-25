@@ -288,6 +288,28 @@ describe('test/canvas.test.js', () => {
       });
   });
 
+  it('draw strokeTextVertical text', async () => {
+    const ctx = app.mockContext();
+    const image = ctx.service.canvas.make(200, 200);
+    const context = image.getContext('2d');
+    const fontPath =
+            'test/fixtures/apps/canvas-test/app/public/fonts/1.otf';
+    await ctx.service.canvas.registerFont(fontPath, 'mo Pro');
+
+    context.font = "30pt 'mo Pro'";
+    context.strokeStyle = 'white';
+    context.textAlign = 'center';
+    context.textBaseline = 'top';
+    context.strokeTextVertical('hello:我是123', 80, 20);
+    ctx.service.canvas
+      .encodePNGToStream(image, fs.createWriteStream('stroke-vertical-text.png'))
+      .then(() => {
+        console.log('wrote out stroke-vertical-text.png');
+        // assert(image.getPixelRGBA(49, 20) === 0xffffffff);
+        // assert(image.getPixelRGBA(57, 20) === 0x000000ff);
+      });
+  });
+
   function clear(context) {
     context.fillStyle = 'white';
     context.fillRect(0, 0, 200, 200);

@@ -1229,6 +1229,59 @@ class Context {
     }
 
     /**
+     * vertical text
+     *
+     * @param {Context} ctx The {@link Context} to paint on
+     * @param {string} text The name to give the font
+     *
+     * @return {object} text Info
+     */
+    strokeTextVertical(text, x, y) {
+        let arrText = text.split('');
+        let arrWidth = arrText.map(letter => {
+            return TEXT.measureText(this, letter).width;
+        });
+        let align = this.textAlign;
+        let baseline = this.textBaseline;
+
+        if (align === 'left') {
+            x = x + Math.max.apply(null, arrWidth) / 2;
+        } else if (align === 'right') {
+            x = x - Math.max.apply(null, arrWidth) / 2;
+        }
+
+        if (
+            baseline === 'bottom' ||
+            baseline === 'alphabetic' ||
+            baseline === 'ideographic'
+        ) {
+            y = y - arrWidth[0] / 2;
+        } else if (baseline === 'top' || baseline === 'hanging') {
+            y = y + arrWidth[0] / 2;
+        }
+
+        this.textAlign = 'center';
+        this.textBaseline = 'middle';
+
+        arrText.forEach((letter, index) => {
+            let letterWidth = arrWidth[index];
+            let code = letter.charCodeAt(0);
+            if (code <= 256) {
+                this.translate(x, y);
+                // this.rotate((90 * Math.PI) / 180);
+                this.translate(-x, -y);
+            } else if (index > 0 && text.charCodeAt(index - 1) < 256) {
+                y = y + arrWidth[index - 1] / 2;
+            }
+            this.strokeText(letter, x, y);
+            this.transform.setTransform(1, 0, 0, 1, 0, 0);
+            y = y + letterWidth;
+        });
+        this.textAlign = align;
+        this.textBaseline = baseline;
+    }
+
+    /**
      * Color String To Unint32
      *
      * Convert a color string to Uint32 notation
