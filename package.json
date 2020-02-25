@@ -1,6 +1,6 @@
 {
   "name": "egg-canvas",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "node版的canvas",
   "types": "./index.d.ts",
   "eggPlugin": {
