@@ -64,13 +64,31 @@ function findFont(family) {
  *
  * @return {void}
  */
-exports.processTextPath = function(ctx, text, x, y, fill) {
+exports.processTextPath = function(ctx, text, x, y, fill, hAlign, vAlign) {
   const font = findFont(ctx._font.family);
   if (!font) {
     console.warn('Font missing', ctx._font);
   }
+  const metrics = exports.measureText(ctx, text);
+  if (hAlign === 'start' || hAlign === 'left' /* x = x*/);
+  if (hAlign === 'end' || hAlign === 'right') x = x - metrics.width;
+  if (hAlign === 'center') x = x - metrics.width / 2;
+
+  if (vAlign === 'alphabetic' /* y = y */);
+  if (vAlign === 'top') y = y + metrics.emHeightAscent;
+  if (vAlign === 'middle') { y = y + metrics.emHeightAscent / 2 + metrics.emHeightDescent / 2; }
+  if (vAlign === 'bottom') y = y + metrics.emHeightDescent;
   const size = ctx._font.size;
-  const path = font.font.getPath(text, x, y, size);
+  const options = {
+    kerning: true,
+    hinting: true,
+    features: {
+      liga: true,
+      rlig: true,
+    },
+  };
+  const path = font.font.getPath(text, x, y, size, options);
+  // path.draw(ctx);
   ctx.beginPath();
   path.commands.forEach(function(cmd) {
     switch (cmd.type) {

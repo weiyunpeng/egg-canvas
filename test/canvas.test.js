@@ -185,12 +185,12 @@ describe('test/canvas.test.js', () => {
       });
   });
 
-  it('can draw some text', async () => {
+  it('can draw some fill text', async () => {
     const ctx = app.mockContext();
     const image = ctx.service.canvas.make(200, 200);
     const context = image.getContext('2d');
     const fontPath =
-            'test/fixtures/apps/canvas-test/app/public/fonts/SourceSansPro-Regular.ttf';
+            'test/fixtures/apps/canvas-test/app/public/fonts/2.ttf';
     const res = await ctx.service.canvas.registerFont(
       fontPath,
       'Source Sans Pro'
@@ -200,31 +200,52 @@ describe('test/canvas.test.js', () => {
     context.font = "28px 'Source Sans Pro'";
     context.fillText('some text', 50, 50);
     ctx.service.canvas
-      .encodeJPEGToStream(image, fs.createWriteStream('fill-text.png'))
+      .encodePNGToStream(image, fs.createWriteStream('fill-text.png'))
       .then(() => {
         console.log('wrote out fill-text.png');
         assert(res.binary === fontPath);
       });
   });
 
-  // it('can draw some text of TTX', async () => {
-  //     const ctx = app.mockContext();
-  //     const image = ctx.service.canvas.make(200, 200);
-  //     const context = image.getContext('2d');
-  //     const fontPath =
-  //         'test/fixtures/apps/canvas-test/app/public/fonts/1.TTF';
-  //     const res = await ctx.service.canvas.registerFont(fontPath, 'test');
+  it('can draw some stroke text', async () => {
+    const ctx = app.mockContext();
+    const image = ctx.service.canvas.make(800, 800);
+    const context = image.getContext('2d');
+    const fontPath =
+            'test/fixtures/apps/canvas-test/app/public/fonts/1.otf';
+    const res = await ctx.service.canvas.registerFont(fontPath, 'no font');
 
-  //     context.fillStyle = 'blue';
-  //     context.font = "28px 'text'";
-  //     context.fillText('TTF text', 50, 50);
-  //     ctx.service.canvas
-  //         .encodeJPEGToStream(image, fs.createWriteStream('ttf-text.png'))
-  //         .then(() => {
-  //             console.log('wrote out ttf-text.png');
-  //             assert(res.binary === fontPath);
-  //         });
-  // });
+    context.strokeStyle = '#ffffff';
+    context.font = "50px 'no font'";
+    context.imageSmoothingEnabled = true;
+    context.strokeText('中国chinese', 200, 300);
+    ctx.service.canvas
+      .encodePNGToStream(image, fs.createWriteStream('stroke-text.png'))
+      .then(() => {
+        console.log('wrote out stroke-text.png');
+        assert(res.binary === fontPath);
+      });
+  });
+
+  it('can draw some text of otf', async () => {
+    const ctx = app.mockContext();
+    const image = ctx.service.canvas.make(800, 800);
+    const context = image.getContext('2d');
+    const fontPath =
+            'test/fixtures/apps/canvas-test/app/public/fonts/1.otf';
+    const res = await ctx.service.canvas.registerFont(fontPath, 'no font');
+
+    context.fillStyle = '#ffffff';
+    context.imageSmoothingEnabled = true;
+    context.font = "50px 'no font'";
+    context.fillText('中国chinese', 200, 300);
+    ctx.service.canvas
+      .encodePNGToStream(image, fs.createWriteStream('otf-text.png'))
+      .then(() => {
+        console.log('wrote out otf-text.png');
+        assert(res.binary === fontPath);
+      });
+  });
 
   it('can measure text', async () => {
     const ctx = app.mockContext();
@@ -250,7 +271,7 @@ describe('test/canvas.test.js', () => {
     const image = ctx.service.canvas.make(200, 200);
     const context = image.getContext('2d');
     const fontPath =
-            'test/fixtures/apps/canvas-test/app/public/fonts/2.ttf';
+            'test/fixtures/apps/canvas-test/app/public/fonts/1.otf';
     await ctx.service.canvas.registerFont(fontPath, 'mo Pro');
 
     context.font = "30pt 'mo Pro'";
@@ -363,5 +384,64 @@ describe('test/canvas.test.js', () => {
     const line = new Line(start, end);
 
     assert(line.getLength() === 10);
+  });
+
+  it('aa polygon', () => {
+    const ctx = app.mockContext();
+    const image = ctx.service.canvas.make(200, 200);
+    const context = image.getContext('2d');
+    context.strokeStyle = '#ffffff';
+    context.beginPath();
+    context.moveTo(10, 10);
+    context.lineTo(180, 30);
+    context.lineTo(50, 90);
+    context.lineTo(10, 10);
+    context.stroke();
+    ctx.service.canvas
+      .encodePNGToStream(image, fs.createWriteStream('aa-polygon.png'))
+      .then(() => {
+        console.log('wrote out aa-polygon.png');
+        // assert(metrics.width === 197.088);
+      });
+  });
+
+  it('aa polygon fill', () => {
+    const ctx = app.mockContext();
+    const image = ctx.service.canvas.make(200, 200);
+    const context = image.getContext('2d');
+    context.fillStyle = '#ffffff';
+    context.imageSmoothingEnabled = true;
+    context.beginPath();
+    context.moveTo(10, 10);
+    context.lineTo(180, 30);
+    context.lineTo(50, 90);
+    context.lineTo(10, 10);
+    context.fill();
+    ctx.service.canvas
+      .encodePNGToStream(image, fs.createWriteStream('aa-polygon-fill.png'))
+      .then(() => {
+        console.log('wrote out aa-polygon-fill.png');
+        // assert(metrics.width === 197.088);
+      });
+  });
+
+  it('aa polygon fill no smoothing', () => {
+    const ctx = app.mockContext();
+    const image = ctx.service.canvas.make(200, 200);
+    const context = image.getContext('2d');
+    context.fillStyle = '#ffffff';
+    context.imageSmoothingEnabled = false;
+    context.beginPath();
+    context.moveTo(10, 10);
+    context.lineTo(180, 30);
+    context.lineTo(50, 90);
+    context.lineTo(10, 10);
+    context.fill();
+    ctx.service.canvas
+      .encodePNGToStream(image, fs.createWriteStream('aa-polygon-fill-no-smoothing.png'))
+      .then(() => {
+        console.log('wrote out aa-polygon-fill-no-smoothing.png');
+        // assert(metrics.width === 197.088);
+      });
   });
 });
