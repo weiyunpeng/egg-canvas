@@ -18,10 +18,7 @@ describe('test/canvas.test.js', () => {
   afterEach(mock.restore);
 
   it('should GET /', () => {
-    return app
-      .httpRequest()
-      .get('/')
-      .expect('hi, canvas')
+    return app.httpRequest().get('/').expect('hi, canvas')
       .expect(200);
   });
 
@@ -189,8 +186,7 @@ describe('test/canvas.test.js', () => {
     const ctx = app.mockContext();
     const image = ctx.service.canvas.make(200, 200);
     const context = image.getContext('2d');
-    const fontPath =
-            'test/fixtures/apps/canvas-test/app/public/fonts/2.ttf';
+    const fontPath = 'test/fixtures/apps/canvas-test/app/public/fonts/2.ttf';
     const res = await ctx.service.canvas.registerFont(
       fontPath,
       'Source Sans Pro'
@@ -220,8 +216,7 @@ describe('test/canvas.test.js', () => {
     const ctx = app.mockContext();
     const image = ctx.service.canvas.make(800, 800);
     const context = image.getContext('2d');
-    const fontPath =
-            'test/fixtures/apps/canvas-test/app/public/fonts/1.otf';
+    const fontPath = 'test/fixtures/apps/canvas-test/app/public/fonts/1.otf';
     const res = await ctx.service.canvas.registerFont(fontPath, 'no font');
 
     context.strokeStyle = '#ffffff';
@@ -240,8 +235,7 @@ describe('test/canvas.test.js', () => {
     const ctx = app.mockContext();
     const image = ctx.service.canvas.make(800, 800);
     const context = image.getContext('2d');
-    const fontPath =
-            'test/fixtures/apps/canvas-test/app/public/fonts/1.otf';
+    const fontPath = 'test/fixtures/apps/canvas-test/app/public/fonts/1.otf';
     const res = await ctx.service.canvas.registerFont(fontPath, 'no font');
 
     context.fillStyle = '#ffffff';
@@ -260,27 +254,21 @@ describe('test/canvas.test.js', () => {
     const ctx = app.mockContext();
     const image = ctx.service.canvas.make(200, 200);
     const context = image.getContext('2d');
-    const fontPath =
-            'test/fixtures/apps/canvas-test/app/public/fonts/SourceSansPro-Regular.ttf';
-    await ctx.service.canvas.registerFont(fontPath, 'Source Sans Pro');
-
-    context.fillStyle = 'blue';
-    context.font = "48px 'Source Sans Pro'";
+    const fontPath = 'test/fixtures/apps/canvas-test/app/public/fonts/2.ttf';
+    await ctx.service.canvas.registerFont(
+      fontPath,
+      'Source Sans Pro'
+    );
+    context.font = "23px 'Source Sans Pro'";
     const metrics = context.measureText('some text');
-    ctx.service.canvas
-      .encodeJPEGToStream(image, fs.createWriteStream('measure-text.png'))
-      .then(() => {
-        console.log('wrote out measure-text.png');
-        assert(metrics.width === 197.088);
-      });
+    assert(metrics === 197.088);
   });
 
   it('draw fillTextVertical text', async () => {
     const ctx = app.mockContext();
     const image = ctx.service.canvas.make(200, 200);
     const context = image.getContext('2d');
-    const fontPath =
-            'test/fixtures/apps/canvas-test/app/public/fonts/1.otf';
+    const fontPath = 'test/fixtures/apps/canvas-test/app/public/fonts/1.otf';
     await ctx.service.canvas.registerFont(fontPath, 'mo Pro');
 
     context.font = "30pt 'mo Pro'";
@@ -301,8 +289,7 @@ describe('test/canvas.test.js', () => {
     const ctx = app.mockContext();
     const image = ctx.service.canvas.make(200, 200);
     const context = image.getContext('2d');
-    const fontPath =
-            'test/fixtures/apps/canvas-test/app/public/fonts/1.otf';
+    const fontPath = 'test/fixtures/apps/canvas-test/app/public/fonts/1.otf';
     await ctx.service.canvas.registerFont(fontPath, 'mo Pro');
 
     context.font = "30pt 'mo Pro'";
@@ -311,7 +298,10 @@ describe('test/canvas.test.js', () => {
     context.textBaseline = 'top';
     context.strokeTextVertical('hello:我是123', 80, 20);
     ctx.service.canvas
-      .encodePNGToStream(image, fs.createWriteStream('stroke-vertical-text.png'))
+      .encodePNGToStream(
+        image,
+        fs.createWriteStream('stroke-vertical-text.png')
+      )
       .then(() => {
         console.log('wrote out stroke-vertical-text.png');
         // assert(image.getPixelRGBA(49, 20) === 0xffffffff);
@@ -335,7 +325,7 @@ describe('test/canvas.test.js', () => {
     const image = ctx.service.canvas.make(200, 200);
     const context = image.getContext('2d');
     const fontPath =
-            'test/fixtures/apps/canvas-test/app/public/fonts/SourceSansPro-Regular.ttf';
+      'test/fixtures/apps/canvas-test/app/public/fonts/SourceSansPro-Regular.ttf';
     await ctx.service.canvas.registerFont(fontPath, 'Source Sans Pro');
 
     clear(context);
@@ -364,7 +354,7 @@ describe('test/canvas.test.js', () => {
     const image = ctx.service.canvas.make(200, 200);
     const context = image.getContext('2d');
     const fontPath =
-            'test/fixtures/apps/canvas-test/app/public/fonts/SourceSansPro-Regular.ttf';
+      'test/fixtures/apps/canvas-test/app/public/fonts/SourceSansPro-Regular.ttf';
     await ctx.service.canvas.registerFont(fontPath, 'Source Sans Pro');
 
     clear(context);
@@ -469,7 +459,10 @@ describe('test/canvas.test.js', () => {
     context.lineTo(10, 10);
     context.fill();
     ctx.service.canvas
-      .encodePNGToStream(image, fs.createWriteStream('aa-polygon-fill-no-smoothing.png'))
+      .encodePNGToStream(
+        image,
+        fs.createWriteStream('aa-polygon-fill-no-smoothing.png')
+      )
       .then(() => {
         console.log('wrote out aa-polygon-fill-no-smoothing.png');
         // assert(metrics.width === 197.088);
