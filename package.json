@@ -14,9 +14,9 @@
     "canvas"
   ],
   "dependencies": {
-    "jpeg-js": "^0.3.7",
-    "opentype.js": "^1.1.0",
-    "pngjs": "^3.4.0"
+    "jpeg-js": "^0.3.3",
+    "opentype.js": "^0.4.3",
+    "pngjs": "^3.3.1"
   },
   "devDependencies": {
     "autod": "^3.1.0",

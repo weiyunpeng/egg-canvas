@@ -196,9 +196,18 @@ describe('test/canvas.test.js', () => {
       'Source Sans Pro'
     );
 
-    context.fillStyle = 'blue';
-    context.font = "28px 'Source Sans Pro'";
-    context.fillText('some text', 50, 50);
+    context.fillStyle = 'white';
+    context.fillRect(0, 0, 200, 200);
+    context.fillStyle = 'red';
+    context.fillRect(0, 50, 200, 1);
+    context.fillStyle = 'black';
+    context.fillRect(0, 50 - 47, 200, 1);
+    context.fillRect(0, 50 - 47 / 2, 200, 1);
+    context.fillRect(0, 50 - 13, 200, 1);
+    context.font = "23px 'Source Sans Pro'";
+    context.fillStyle = 'black';
+    context.textBaseline = 'bottom';
+    context.fillText('中国chinese', 50, 50);
     ctx.service.canvas
       .encodePNGToStream(image, fs.createWriteStream('fill-text.png'))
       .then(() => {
