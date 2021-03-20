@@ -3829,10 +3829,10 @@ jest-changed-files@^24.7.0:
     execa "^1.0.0"
     throat "^4.0.0"
 
-jpeg-js@^0.3.3:
-  version "0.3.7"
-  resolved "https://registry.npm.taobao.org/jpeg-js/download/jpeg-js-0.3.7.tgz?cache=0&sync_timestamp=1587651158254&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fjpeg-js%2Fdownload%2Fjpeg-js-0.3.7.tgz#471a89d06011640592d314158608690172b1028d"
-  integrity sha1-RxqJ0GARZAWS0xQVhghpAXKxAo0=
+jpeg-js@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/jpeg-js/-/jpeg-js-0.4.0.tgz#39adab7245b6d11e918ba5d4b49263ff2fc6a2f9"
+  integrity sha512-960VHmtN1vTpasX/1LupLohdP5odwAT7oK/VSm6mW0M58LbrBnowLAPWAZhWGhDAGjzbMnPXZxzB/QYgBwkN0w==
 
 js-tokens@^3.0.0, js-tokens@^3.0.2:
   version "3.0.2"
